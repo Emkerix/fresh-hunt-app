@@ -5,13 +5,13 @@ export default class Olx {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @Column({ unique: true, nullable: false })
+  @Column({ length: 25, unique: true, nullable: false })
   productId: string;
 
-  @Column({ nullable: false })
+  @Column({ length: 75, nullable: false })
   title: string;
 
-  @Column({ nullable: false })
+  @Column({ type: 'numeric', precision: 10, scale: 2, nullable: false })
   price: number;
 
   @Column({ nullable: false })
