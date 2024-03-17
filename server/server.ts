@@ -16,11 +16,11 @@ const APP_PORT = process.env.APP_PORT || 3001;
 app.use('/api', routers);
 
 app.get('/', (request, response, next) => {
-  response.json({ status: "running" });
+  response.json({ status: 'running' });
 });
 
 app.use(function (request, response, next) {
-  response.status(404).send({ error: "404" });
+  response.status(404).send({ error: '404' });
 });
 
 app.listen(APP_PORT, () => {
