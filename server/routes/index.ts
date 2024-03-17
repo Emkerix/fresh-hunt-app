@@ -1,7 +1,7 @@
 import { Router } from 'express';
-import router from './olx';
+import olxRouter from './olx';
 
 const routers = Router();
-routers.use('/olx-offers', router);
+routers.use('/olx-offers', olxRouter);
 
 export default routers;
