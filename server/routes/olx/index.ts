@@ -1,5 +1,5 @@
 import { Request, Response, Router } from 'express';
-import { dataSource } from '../../config/app-data-source';
+import { dataSource } from '../../config/appDataSource';
 import Olx from '../../entities/Olx';
 
 const olxRouter = Router();
@@ -30,7 +30,7 @@ olxRouter.get('/', async (req: Request, res: Response) => {
     const data = await dataSource.getRepository(Olx).find();
     res.status(200).json(data);
   } catch (error) {
-    res.status(500).json({ error: 'An error occurred while fetching data from the OLX table' });
+    res.status(500).json({ error: 'An error occurred while fetching data from the olx table' });
   }
 });
 
@@ -39,8 +39,8 @@ olxRouter.get('/', async (req: Request, res: Response) => {
  * /api/olx-offers:
  *   post:
  *     tags: [Olx]
- *     summary: Create a new OLX offer
- *     description: Creates a new OLX offer
+ *     summary: Create a new olx offer
+ *     description: Creates a new olx offer
  *     requestBody:
  *       required: true
  *       content:
@@ -68,13 +68,13 @@ olxRouter.get('/', async (req: Request, res: Response) => {
  *                 default: false
  *     responses:
  *       201:
- *         description: OLX offer created successfully
+ *         description: Olx offer created successfully
  *       409:
  *         description: Conflict - productId already exists
  *       422:
  *         description: Unprocessable Entity
  *       500:
- *         description: An error occurred while creating the OLX offer
+ *         description: An error occurred while creating the olx offer
  */
 olxRouter.post('/', async (req: Request, res: Response) => {
   try {
@@ -125,9 +125,9 @@ olxRouter.post('/', async (req: Request, res: Response) => {
     const newOlxOffer = data.create({ productId, title, price, date, thumbnailUrl, disable });
 
     await data.save(newOlxOffer);
-    res.status(201).json({ message: 'OLX offer created successfully' });
+    res.status(201).json({ message: 'Olx offer created successfully' });
   } catch (error) {
-    res.status(500).json({ error: 'An error occurred while creating the OLX offer' });
+    res.status(500).json({ error: 'An error occurred while creating the olx offer' });
   }
 });
 
@@ -136,8 +136,8 @@ olxRouter.post('/', async (req: Request, res: Response) => {
  * /api/olx-offers/{id}:
  *   put:
  *     tags: [Olx]
- *     summary: Update a OLX offer by ID
- *     description: Updates a OLX offer with the specified ID
+ *     summary: Update a olx offer by ID
+ *     description: Updates a olx offer with the specified ID
  *     parameters:
  *       - in: path
  *         name: id
@@ -180,7 +180,7 @@ olxRouter.post('/', async (req: Request, res: Response) => {
  *       422:
  *         description: Unprocessable Entity
  *       500:
- *         description: An error occurred while updating the OLX offer
+ *         description: An error occurred while updating the olx offer
  */
 olxRouter.put('/:id', async (req: Request, res: Response) => {
   const id: number = parseInt(req.params.id);
@@ -242,9 +242,9 @@ olxRouter.put('/:id', async (req: Request, res: Response) => {
     Object.assign(olxOffer, { productId, title, price, date, thumbnailUrl, disable });
 
     await data.save(olxOffer);
-    res.status(200).json({ message: 'OLX offer updated successfully' });
+    res.status(200).json({ message: 'Olx offer updated successfully' });
   } catch (error) {
-    res.status(500).json({ error: 'An error occurred while updating the OLX offer' });
+    res.status(500).json({ error: 'An error occurred while updating the olx offer' });
   }
 });
 
@@ -281,7 +281,7 @@ olxRouter.delete('/:id', async (req: Request, res: Response) => {
     await data.remove(olxOffer);
     res.status(204).end();
   } catch (error) {
-    res.status(500).json({ error: 'An error occurred while deleting the OLX offer' });
+    res.status(500).json({ error: 'An error occurred while deleting the olx offer' });
   }
 });
 
