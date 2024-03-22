@@ -11,23 +11,40 @@ export default class Olx {
   @Column({ length: 75, nullable: false })
   title: string;
 
-  @Column({ type: 'numeric', precision: 10, scale: 2, nullable: false })
+  @Column({ nullable: false })
+  description: string;
+
+  @Column({ nullable: false })
+  url: string;
+
+  @Column({ type: 'numeric', precision: 10, nullable: false })
   price: number;
 
   @Column({ nullable: false })
-  date: Date;
+  createdTime: Date;
 
-  @Column({ nullable: false })
-  thumbnailUrl: string;
+  @Column({ nullable: true })
+  thumbnailUrl?: string;
 
-  @Column({ nullable: false, default: 0 })
+  @Column({ nullable: false, default: false })
   disable: boolean;
 
-  constructor(title: string, productId: string, price: number, date: Date, thumbnailUrl: string, disable: boolean) {
+  constructor(
+    productId: string,
+    title: string,
+    description: string,
+    url: string,
+    price: number,
+    createdTime: Date,
+    thumbnailUrl: string,
+    disable: boolean = false
+  ) {
     this.productId = productId;
     this.title = title;
+    this.description = description;
+    this.url = url;
     this.price = price;
-    this.date = date;
+    this.createdTime = createdTime;
     this.thumbnailUrl = thumbnailUrl;
     this.disable = disable;
   }

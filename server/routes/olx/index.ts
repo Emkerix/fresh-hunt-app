@@ -55,6 +55,10 @@ olxRouter.get('/', async (req: Request, res: Response) => {
  *               title:
  *                 type: string
  *                 maxLength: 75
+ *               description:
+ *                 type: string
+ *               url:
+ *                 type: string
  *               price:
  *                 type: number
  *                 minimum: 0.01
@@ -81,22 +85,28 @@ olxRouter.post('/', async (req: Request, res: Response) => {
     const {
       productId,
       title,
+      description,
+      url,
       price,
-      date,
+      createdTime,
       thumbnailUrl,
       disable
     }: {
       productId: string;
       title: string;
+      description: string;
+      url: string;
       price: number;
-      date: Date;
+      createdTime: Date;
       thumbnailUrl: string;
       disable: boolean;
     } = req.body;
     const data = dataSource.getRepository(Olx);
 
     if (
-      [productId, title, date, thumbnailUrl].some((field) => !field || (typeof field === 'string' && !field.trim()))
+      [productId, title, description, url, createdTime, thumbnailUrl].some(
+        (field) => !field || (typeof field === 'string' && !field.trim())
+      )
     ) {
       return res.status(422).json({ error: 'Fields cannot be empty' });
     }
@@ -122,7 +132,7 @@ olxRouter.post('/', async (req: Request, res: Response) => {
       return res.status(422).json({ error: 'Disable must be a boolean value' });
     }
 
-    const newOlxOffer = data.create({ productId, title, price, date, thumbnailUrl, disable });
+    const newOlxOffer = data.create({ productId, title, description, url, price, createdTime, thumbnailUrl, disable });
 
     await data.save(newOlxOffer);
     res.status(201).json({ message: 'Olx offer created successfully' });
@@ -159,6 +169,10 @@ olxRouter.post('/', async (req: Request, res: Response) => {
  *               title:
  *                 type: string
  *                 maxLength: 75
+ *               description:
+ *                 type: string
+ *               url:
+ *                 type: string
  *               price:
  *                 type: number
  *                 minimum: 0.01
@@ -193,25 +207,29 @@ olxRouter.put('/:id', async (req: Request, res: Response) => {
     const {
       productId,
       title,
+      description,
+      url,
       price,
-      date,
+      createdTime,
       thumbnailUrl,
       disable
     }: {
       productId: string;
       title: string;
+      description: string;
+      url: string;
       price: number;
-      date: Date;
+      createdTime: Date;
       thumbnailUrl: string;
       disable: boolean;
     } = req.body;
 
-    if (!productId || !title || !price || !date || !thumbnailUrl) {
+    if (!productId || !title || !description || !url || !price || !createdTime) {
       return res.status(400).json({ error: 'Missing required fields' });
     }
 
     if (
-      [productId, title, price, date, thumbnailUrl].some(
+      [productId, title, description, url, createdTime, thumbnailUrl].some(
         (field) => !field || (typeof field === 'string' && !field.trim())
       )
     ) {
@@ -239,7 +257,7 @@ olxRouter.put('/:id', async (req: Request, res: Response) => {
       return res.status(422).json({ error: 'Disable must be a boolean value' });
     }
 
-    Object.assign(olxOffer, { productId, title, price, date, thumbnailUrl, disable });
+    Object.assign(olxOffer, { productId, title, description, url, price, createdTime, thumbnailUrl, disable });
 
     await data.save(olxOffer);
     res.status(200).json({ message: 'Olx offer updated successfully' });
